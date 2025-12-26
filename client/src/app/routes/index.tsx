@@ -5,13 +5,19 @@ import AuthLayout from '../../layouts/AuthLayout'
 import LoginPage from '../../features/auth/LoginPage'
 import AdminLayout from '../../layouts/AdminLayout'
 import AdminDashboard from '../../features/admin/AdminDashboard'
+import ProductDetailsPage from '../../features/products/ProductDetailsPage'
+import ProductListPage from '../../features/products/ProductListPage'
+import CartPage from '../../features/cart/CartPage'
 
 
 export const router = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
-      { path: '/', element: <HomePage /> }
+      { path: '/', element: <HomePage /> },
+      {path:'/products' ,element:<ProductListPage/> },
+      {path:'/products/:id' ,element:<ProductDetailsPage/> },
+      {path:'/cart' ,element:<CartPage/> }
     ]
   },
   {

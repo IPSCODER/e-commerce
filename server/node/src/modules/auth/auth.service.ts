@@ -30,7 +30,6 @@ export const loginUser = async (
                 role:user.role
             }
         }
-
 }
 
 export const registerUser = async (

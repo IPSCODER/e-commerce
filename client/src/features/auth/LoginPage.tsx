@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { useLogin, useRegister } from "./hooks"
+import { useNavigate } from "react-router-dom"
+import toast from "react-hot-toast"
 
 const LoginPage = () => {
   const [isLogin,setIsLogin] = useState(true)
@@ -7,6 +9,7 @@ const LoginPage = () => {
   const [password,setPassword] = useState('')
   const loginMutation = useLogin()
   const RegisterMustation = useRegister()
+   const navigate = useNavigate()
 
   const handleSubmit = (e:React.FormEvent) => {
     e.preventDefault()
@@ -16,7 +19,12 @@ const LoginPage = () => {
     {
       onSuccess:(data) => {
         localStorage.setItem('token',data.token)
-        alert('Login Successful')
+        toast.success("Login Successfull")
+        if(data.user.role === 'USER'){
+          navigate('/') 
+        }else{
+          navigate('/admin') 
+        }
       }
     }
   )

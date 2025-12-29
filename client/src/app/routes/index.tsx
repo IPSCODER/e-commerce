@@ -8,6 +8,13 @@ import AdminDashboard from '../../features/admin/AdminDashboard'
 import ProductDetailsPage from '../../features/products/ProductDetailsPage'
 import ProductListPage from '../../features/products/ProductListPage'
 import CartPage from '../../features/cart/CartPage'
+import ProtectedRoute from './ProtectedRoutes'
+import { isAdmin, isAunthenticated } from '../../utils/auth'
+import AdminProductsPage from '../../features/admin/AdminProductPage'
+import AdminAddProductPage from '../../features/admin/AdminAddProductPage'
+import AdminEditProductPage from '../../features/admin/AdminEditProductPage'
+
+
 
 
 export const router = createBrowserRouter([
@@ -17,7 +24,6 @@ export const router = createBrowserRouter([
       { path: '/', element: <HomePage /> },
       {path:'/products' ,element:<ProductListPage/> },
       {path:'/products/:id' ,element:<ProductDetailsPage/> },
-      {path:'/cart' ,element:<CartPage/> }
     ]
   },
   {
@@ -26,11 +32,32 @@ export const router = createBrowserRouter([
       { path: '/login', element: <LoginPage /> }
     ]
   },
-  {
-    path: '/admin',
-    element: <AdminLayout />,
+ {
+  element :<ProtectedRoute isAllowed={isAunthenticated()} />,
+  children:[{
+    element: <MainLayout />,
     children: [
-      { index: true, element: <AdminDashboard /> }
+      {path:'/cart' ,element:<CartPage/> }
     ]
-  }
+  }]
+ },
+ {
+  element: (
+    <ProtectedRoute
+      isAllowed={isAunthenticated() && isAdmin() }
+    />
+  ),
+  children: [
+    {
+      path: '/admin',
+      element: <AdminLayout />,
+      children: [
+        { index: true, element: <AdminDashboard /> },
+        { path:'/admin/products', element: <AdminProductsPage /> },
+        {path:"/admin/products/add", element:<AdminAddProductPage />} ,
+        {path:"/admin/products/:id/edit", element:<AdminEditProductPage />}
+      ],
+    },
+  ],
+},
 ])

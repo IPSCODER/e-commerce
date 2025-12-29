@@ -24,11 +24,11 @@ export const register = async (
     next:NextFunction
 ) => {
     try{
-        const {email,password} = req.body
+        const {email,password ,role} = req.body
         if(!email || !password ){
             throw new Error('Email and Password required')
         }
-        const result = await registerUser(email,password)
+        const result = await registerUser(email,password ,role)
         return res.status(201).json(result)
     }catch(err){
         next(err)

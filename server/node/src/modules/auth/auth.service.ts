@@ -34,7 +34,8 @@ export const loginUser = async (
 
 export const registerUser = async (
     email:string,
-    password:string
+    password:string,
+    role:string
 ) => {
     const existing = await pool.query(
         `SELECT id FROM users WHERE email = $1`,
@@ -48,8 +49,8 @@ export const registerUser = async (
     const hashedPassword = await bycrypt.hash(password,10)
 
     const {rows} = await pool.query(
-        `INSERT INTO users (email, password) VALUES($1, $2) RETURNING id, email, role`,
-        [email,hashedPassword]
+        `INSERT INTO users (email, password,role) VALUES($1, $2, $3) RETURNING id, email, role`,
+        [email,hashedPassword,role]
     )
 
     const user = rows[0]

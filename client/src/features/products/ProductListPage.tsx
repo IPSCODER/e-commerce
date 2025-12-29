@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../store/hook';
 const ProductListPage = () => {
 
   const dispatch = useAppDispatch()
-  const { data, isLoading, error } = useProducts(10, 0)
+  const { data, isLoading, error } = useProducts(20, 0)
 
 
   if (isLoading) return <p>Loading products...</p>
